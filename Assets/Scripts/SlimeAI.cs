@@ -25,7 +25,6 @@ public class SlimeAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(rb.velocity.y);
         if (!detectedEdge) Flip();
         if (detectedWall) Flip();
         Patrol();
