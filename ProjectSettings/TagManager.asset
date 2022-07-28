@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MagicBlock
   - Ending
+  - Bullet
   layers:
   - Default
   - TransparentFX
