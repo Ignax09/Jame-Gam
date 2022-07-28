@@ -13,6 +13,7 @@ public class DroneAI : MonoBehaviour
     private State state;
     Vector3 intrestedPosition;
     float LockedPositionY;
+    [SerializeField] DroneTurret dt;
 
     private enum State
     {
@@ -51,6 +52,7 @@ public class DroneAI : MonoBehaviour
             case State.Chasing:
                 transform.position = Vector3.MoveTowards(transform.position, playerTransform.position, chaseSpeed * Time.deltaTime);
                 transform.position = new Vector3(transform.position.x, LockedPositionY, 0);
+                dt.Active();
                 if (Vector3.Distance(transform.position, startingPosition) >= detectionDistance * 3)
                 {
                     state = State.BackToStart;
