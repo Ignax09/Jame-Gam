@@ -18,7 +18,7 @@ public class Crushed : MonoBehaviour
     void Update()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(collider1.bounds.center, collider1.bounds.size - new Vector3(0.4f, 0.4f, 0), 0f, Vector2.down, 0, layerMask);
-        if (raycastHit.collider != null)
+        if (raycastHit.collider.gameObject.tag == "MagicBlock")
         {
             Death();
         }

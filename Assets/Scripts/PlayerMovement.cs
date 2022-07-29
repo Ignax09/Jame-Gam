@@ -11,11 +11,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Collider2D boxCollider;
     [SerializeField] private Transform glassesRotation;
+    SpriteRenderer sRenderer;
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+        sRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        glassesRotation.localPosition = new Vector3(0.2f, 0.2f, 0);
+        
     }
 
     void Update()
@@ -34,11 +38,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (movement < 0)
         {
-            glassesRotation.localPosition = new Vector3(-0.2f, 0.2f, 0);
+            sRenderer.flipX = true;
         }
         if (movement > 0)
         {
-            glassesRotation.localPosition = new Vector3(0.2f, 0.2f, 0);
+            sRenderer.flipX = false;
+        }
+        if (movement == 0)
+        {
+            animator.SetFloat("Speed", 0);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 1);
+        }
+        if (rb.velocity.y <= 0.1f)
+        {
+            animator.SetBool("MidAir", false);
         }
     }
 
@@ -46,13 +62,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded())
         {
+            animator.SetBool("MidAir", true);
             rb.velocity = new Vector2(rb.velocity.x, force);
         }
     }
 
     private bool isGrounded()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0f, Vector2.down, boxCollider.bounds.extents.y, layerMask);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size - new Vector3(0.2f, 0, 0), 0f, Vector2.down, boxCollider.bounds.extents.y, layerMask);
         return raycastHit.collider != null;
 
     }
