@@ -34,5 +34,14 @@ public class DimensionSwitch : MonoBehaviour
                 filter.SetActive(true);
             }
         }
+        float movement = Input.GetAxisRaw("Horizontal");
+        if (movement < 0)
+        {
+            sRenderer.flipX = true;
+        }
+        if (movement > 0)
+        {
+            sRenderer.flipX = false;
+        }
     }
 }

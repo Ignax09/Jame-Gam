@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class AffectedByGlasses : MonoBehaviour
 {
     [SerializeField] bool isFromNormalDimension;
-    SpriteRenderer sRenderer;
+    TilemapRenderer sRenderer;
     Collider2D objectCollider;
     [SerializeField] Material[] placeholderDifferentAppearance;
     void Start()
     {
-        sRenderer = GetComponent<SpriteRenderer>();
+        sRenderer = GetComponent<TilemapRenderer>();
         objectCollider = GetComponent<Collider2D>();
         if (isFromNormalDimension)
         {
