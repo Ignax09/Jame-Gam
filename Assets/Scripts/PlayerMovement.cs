@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform glassesRotation;
     SpriteRenderer sRenderer;
     Animator animator;
+    bool landSound;
 
     void Start()
     {
@@ -50,11 +51,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            FindObjectOfType<AudioManager>().Play("Walk");
             animator.SetFloat("Speed", 1);
         }
         if (rb.velocity.y <= 0.1f)
         {
             animator.SetBool("MidAir", false);
+        }
+        if (rb.velocity.y <= 0.1f && landSound)
+        {
+            FindObjectOfType<AudioManager>().Play("Land");
+            landSound = false;
         }
     }
 
@@ -64,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("MidAir", true);
             rb.velocity = new Vector2(rb.velocity.x, force);
+            FindObjectOfType<AudioManager>().Play("Jump");
+            landSound = true;
         }
     }
 
