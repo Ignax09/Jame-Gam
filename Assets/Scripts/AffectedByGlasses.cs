@@ -9,9 +9,10 @@ public class AffectedByGlasses : MonoBehaviour
     TilemapRenderer sRenderer;
     Collider2D objectCollider;
     [SerializeField] Material[] placeholderDifferentAppearance;
-    void Start()
+    void Awake()
     {
         sRenderer = GetComponent<TilemapRenderer>();
+        sRenderer.enabled = true;
         objectCollider = GetComponent<Collider2D>();
         if (isFromNormalDimension)
         {
