@@ -14,9 +14,11 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer sRenderer;
     Animator animator;
     bool landSound;
+    float footstepCooldown;
 
     void Start()
     {
+        footstepCooldown = 0.1f;
         animator = GetComponent<Animator>();
         sRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
@@ -51,12 +53,19 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            FindObjectOfType<AudioManager>().Play("Walk");
+            footstepCooldown -= Time.deltaTime;
+            if (footstepCooldown <= 0) FindObjectOfType<AudioManager>().Play("Walk");
+            
+            if (footstepCooldown <= 0) footstepCooldown = 0.2f;
             animator.SetFloat("Speed", 1);
         }
         if (rb.velocity.y <= 0.1f)
         {
             animator.SetBool("MidAir", false);
+        }
+        else
+        {
+            footstepCooldown = 0.2f;
         }
         if (rb.velocity.y <= 0.1f && landSound)
         {
